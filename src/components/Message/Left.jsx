@@ -1,11 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { PiNotePencilBold } from "react-icons/pi";
 import { MdLocationSearching } from "react-icons/md";
 import { FaCaretDown } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { messageBtn1, messageBtn2, messageBtn3 } from "../../store/stateSlice";
 
 const Left = () => {
+  const dispatch = useDispatch();
+  const [option, setOption] = useState('')
+
+  const option1 = useSelector((state) => state.stateManage.messageOption1)
+  const option2 = useSelector((state) => state.stateManage.messageOption2)
+  const option3 = useSelector((state) => state.stateManage.messageOption3)
+  // const option = useSelector(state => state.stateManage.profileBtn)
+  console.log(option1)
+
+  const handleOption = (e, option) => {
+    if(option1 === false || option2 === false || option3 === false){
+      e.stopPropagation()
+    }
+    if(option === "option1"){
+      dispatch(messageBtn1())
+    } else if(option === 'option2'){
+      dispatch(messageBtn2())
+    }else if(option === 'option3'){
+      dispatch(messageBtn3())
+    }
+
+  }
+
   return (
     <div className="bg-white rounded-xl overflow-hidden">
       <div>
@@ -22,15 +47,33 @@ const Left = () => {
             </div>
           </div>
           <div className="flex text-xl gap-4">
+            <div onClick={(e) => handleOption(e, 'option3')} className="relative">
             <BsThreeDots className="cursor-pointer" />
+            {option3 && 
+              <div className="absolute flex flex-col  right-2 bg-white p-2 w-[250px] border border-gray-400 rounded-lg ">
+                  <p className="text-[14px] font-semibold text-gray-600 py-1 px-2 rounded-md cursor-pointer hover:bg-gray-200">Manage Conversations</p>
+                  <p className="text-[14px] font-semibold text-gray-600 py-1 px-2 rounded-md cursor-pointer hover:bg-gray-200">Set away message</p>
+                  <p className="text-[14px] font-semibold text-gray-600 py-1 px-2 rounded-md cursor-pointer hover:bg-gray-200">Manage settings</p>
+              </div>
+              }
+
+            </div>
             <PiNotePencilBold className="cursor-pointer" />
           </div>
         </div>
         <div className="flex items-center gap-3 py-2 px-4 border-t border-gray-200">
-          <div className="pr-3  border-r-2 border-gray-400">
+          <div onClick={(e) => handleOption(e, 'option1')} className="relative pr-3  border-r-2 border-gray-400">
             <button className="flex items-center gap-2 font-semibold bg-green-600 rounded-full px-5 py-1 text-white">
               Focused <FaCaretDown />
             </button>
+            {option1 && 
+            <div className="absolute flex flex-col  left-2 top-10 bg-white p-3 w-[200px] border border-gray-400 rounded-lg ">
+                  <p className="text-[14px] font-semibold text-gray-600 py-1 px-2 rounded-md cursor-pointer hover:bg-gray-200">Focused</p>
+                  <p className="text-[14px] font-semibold text-gray-600 py-1 px-2 rounded-md cursor-pointer hover:bg-gray-200">Other</p>
+                  <p className="text-[14px] font-semibold text-gray-600 py-1 px-2 rounded-md cursor-pointer hover:bg-gray-200">Archieve</p>
+                  <p className="text-[14px] font-semibold text-gray-600 py-1 px-2 rounded-md cursor-pointer hover:bg-gray-200">Spam</p>
+              </div>
+            }
           </div>
           <button className="px-5 py-1 border border-gray-600 text-gray-600 rounded-full font-semibold">
             Unread
@@ -73,7 +116,21 @@ const Left = () => {
                 <p className="text-gray-500">Marketing Consltant | Helping Business</p>
               </div>
               <div className="flex gap-3 text-xl">
+                <div onClick={(e) => handleOption(e, 'option2')} className="relative">
                 <BsThreeDots className="cursor-pointer" />
+              {option2 && 
+                <div className="absolute flex flex-col  right-2 bg-white p-3 w-[300px] border border-gray-400 rounded-lg ">
+                  <p className="text-[14px] font-semibold text-gray-600 py-1 px-2 rounded-md cursor-pointer hover:bg-gray-200">Move to Other</p>
+                  <p className="text-[14px] font-semibold text-gray-600 py-1 px-2 rounded-md cursor-pointer hover:bg-gray-200">Mark as unread</p>
+                  <p className="text-[14px] font-semibold text-gray-600 py-1 px-2 rounded-md cursor-pointer hover:bg-gray-200"> Star</p>
+                  <p className="text-[14px] font-semibold text-gray-600 py-1 px-2 rounded-md cursor-pointer hover:bg-gray-200">Archieve</p>
+                  <p className="text-[14px] font-semibold text-gray-600 py-1 px-2 rounded-md cursor-pointer hover:bg-gray-200">Hide or report this ad</p>
+                  <p className="text-[14px] font-semibold text-gray-600 py-1 px-2 rounded-md cursor-pointer hover:bg-gray-200">Delete conversation</p>
+                  <p className="text-[14px] font-semibold text-gray-600 py-1 px-2 rounded-md cursor-pointer hover:bg-gray-200">Why am I seeing this ad?</p>
+              </div>
+                }
+
+                </div>
                 <FaRegStar className="cursor-pointer" />
               </div>
             </div>

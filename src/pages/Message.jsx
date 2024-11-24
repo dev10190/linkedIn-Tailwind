@@ -9,7 +9,7 @@ const Message = () => {
           <div className=" w-full   z-10 ">
             <Left />
           </div>
-      <div className="md:w-[350px] w-full z-10">
+      <div className="md:w-[400px] w-full z-10">
             <Right />
           </div>
       </div>

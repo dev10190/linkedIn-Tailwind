@@ -1,9 +1,31 @@
 import React from 'react'
 import logo from '../../assets/linkedin.png'
+import sbi from '../../assets/sbi.jpg'
+import { BsThreeDots } from "react-icons/bs";
 
 const Right = () => {
   return (
     <div>
+      <div className="bg-white rounded-xl overflow-hidden">
+        <div className='relative w-full h-16 bg-gray-400'>
+          <div className='absolute top-6 left-5'>
+
+          <img className='w-20'  src={sbi} alt="" />
+          </div>
+          <div className='absolute bg-white flex top-2 right-2 rounded-full items-center px-4 py-1 gap-2 text-sm'>
+            <p>Promoted</p>
+            <BsThreeDots />
+          </div>
+        </div>
+        <div className='mt-10 p-4 flex flex-col gap-3'>
+          <p className='font-semibold'> State Bank of India</p>
+          <p className='text-sm'>Devendra, you might like to follow <span className='font-semibold'>State Bank of India</span></p>
+          <div className='flex flex-col gap-3'>
+            <p className='text-sm'>Keep up with interesting, relevant updates</p>
+            <button className='bg-blue-500 w-full rounded-full text-white py-2'>Follow</button>
+          </div>
+        </div>
+      </div>
       <div>
       <div className='px-4 py-4 flex flex-wrap gap-2 items-center justify-center rounded-xl'>
       <p className='text-[12px] font-semibold text-gray-700 cursor-pointer hover:underline hover:text-gray-900'>About</p>

@@ -67,7 +67,7 @@ const Middle = () => {
                         <BsThreeDots />
                     </div>
                     {options &&
-                        <div className='absolute bg-white p-5 top-10 right-3 border border-gray-400 rounded-lg'>
+                        <div className='absolute  bg-white p-5 top-10 right-3 border border-gray-400 rounded-lg'>
                             <Options />
                         </div>
                     }

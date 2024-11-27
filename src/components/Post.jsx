@@ -14,7 +14,7 @@ const Post = () => {
     const dispatch = useDispatch()
 
   return (
-    <div className=" absolute z-20 top-0 left-0 bottom-0  w-full h-screen bg-black bg-opacity-65 flex items-center justify-center">
+    <div className=" absolute z-30 top-0 left-0 bottom-0  w-full h-screen bg-black bg-opacity-65 flex items-center justify-center">
       <div className="relative bg-white p-5 rounded-2xl w-[60%] flex flex-col gap-5">
         <div onClick={() => dispatch(dontShow())} className="absolute right-6 top-4 cursor-pointer">
           <IoMdClose className="font-semibold text-2xl" />

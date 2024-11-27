@@ -17,7 +17,7 @@ const Home = () => {
 
   if (!userData) {
     return (
-      <div className="md:flex md:flex-row flex flex-col items-center gap-3 py-8 w-full">
+      <div className="md:flex md:flex-row flex flex-col items-center gap-3 py-8 w-full pt-[100px]">
         <div className="md:w-[50%]">
           <p className="md:text-[48px] md:text-start text-center text-3xl mb-10 text-gray-600 leading-tight">
             Welcome to your professional community

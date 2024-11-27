@@ -16,15 +16,16 @@ import LogoutButn from "./LogoutButn";
 import authService from "../appwrite/auth";
 import ProfileDropdown from "./Main/ProfileDropdown";
 import Business from "./Main/Business";
+import minilogo from '../assets/minilogo.png'
 
 const Header = () => {
   const navigate = useNavigate();
+  const [scrollDirection, setScrollDirection] = useState(false);
 
   const authStatus = useSelector((state) => state.auth.status);
 
-  const [select, setSelect] = useState("Home");
-  console.log(select);
-
+  const [select, setSelect] = useState("");
+  
   const navItems = [
     {
       title: "Articles",
@@ -60,7 +61,7 @@ const Header = () => {
       title: "Jobs",
       path: "/jobs",
       image: jobs,
-      auth: true,
+      auth: authStatus,
     },
     {
       title: "Games",
@@ -87,92 +88,140 @@ const Header = () => {
     navigate(item.path);
   };
 
+  useEffect(() => {
+    const handleScroll = (event) => {
+      const scrollHeight = window.scrollY;
+      if (scrollHeight > 100) {
+        setScrollDirection(true);
+      } else if (event.deltaY < 300) {
+        setScrollDirection(false);
+      }
+    };
+
+    // Add event listener
+    window.addEventListener("wheel", handleScroll);
+
+    // Clean up on component unmount
+    return () => {
+      window.removeEventListener("wheel", handleScroll);
+    };
+  }, []);
+
+  const logoSelect = () => {
+    setSelect("")
+    navigate("/")
+  }
+
   return (
-    <div className=" py-1 w-full max-w-[1200px] m-auto px-5">
-      <div className="flex items-center justify-between z-10">
-        <div onClick={() => navigate("/")}>
-          <img
-            className="w-32 stroke-blue-600 cursor-pointer"
-            src={linkedin}
-            alt=""
-          />
-        </div>
-        <ul className="flex items-center gap-2">
-          {navItems.map((item) =>
-            item.auth ? (
-              <li
-                key={item.title}
-                onClick={() => navigate(item.path)}
-                className={`md:flex md:flex-col hidden justify-center items-center gap-[5px]  w-[80px] py-[2px] cursor-pointer ${
-                  select === item.title ? "border-b-2 border-black" : " "
-                }`}
-              >
-                <div
-                  onClick={() => setSelect(item.title)}
-                  className="flex flex-col items-center gap-[5px]"
+    <div className=" py-1 w-full px-5 bg-white fixed left-0 right-0 z-20 shadow-md shadow-gray-500">
+      <div className="max-w-[1200px] m-auto md:px-5">
+        <div className="flex items-center justify-between z-10">
+          <div onClick={logoSelect}>
+            <img
+              className={`${authStatus ? 'w-12' : 'w-32'} stroke-blue-600 cursor-pointer`}
+              src={authStatus ? minilogo : linkedin}
+              alt=""
+            />
+          </div>
+          <ul className="flex items-center gap-2">
+            {navItems.map((item) =>
+              item.auth ? (
+                <li
+                  key={item.title}
+                  onClick={() => navigate(item.path)}
+                  className={`md:flex md:flex-col hidden justify-center items-center gap-[5px]  w-[80px] py-[2px] cursor-pointer ${
+                    select === item.title ? "border-b-2 border-black" : " "
+                  }`}
                 >
-                  <div className="w-[20px] h-4 ">
-                    <img className="w-full" src={item.image} alt="" />
-                  </div>
-                  <p
-                    className={`font-normal text-gray-900 text-[13px]  ${
-                      select === item.title ? "text-black" : " text-gray-400"
-                    }`}
+                  <div
+                    onClick={() => setSelect(item.title)}
+                    className="flex flex-col items-center gap-[5px]"
                   >
-                    {item.title}
-                  </p>
+                    <div className="w-[20px] h-4 ">
+                      <img className="w-full" src={item.image} alt="" />
+                    </div>
+                    <p
+                      className={`font-normal text-gray-900 text-[13px]  ${
+                        select === item.title ? "text-black" : " text-gray-400"
+                      }`}
+                    >
+                      {item.title}
+                    </p>
+                  </div>
+                </li>
+              ) : null
+            )}
+            {!authStatus && (
+              <li
+                onClick={() => navigate("/app")}
+                className="flex flex-col justify-center items-center gap-[4px] border-x border-x-gray-500 outline-none  px-4 ml-4 mr-2 text-gray-500 font-semibold text-sm"
+              >
+                <div className="w-4 h-4">
+                  <img className="w-full" src={app} alt="" />
+                </div>
+                <p className="text-nowrap">Get the app</p>
+              </li>
+            )}
+
+            {!authStatus && (
+              <li>
+                <div className="px-2 flex gap-2">
+                  <button
+                    onClick={() => navigate("/signup")}
+                    className="border border-blue-600 outline-none px-6 cursor-pointer py-[8px] rounded-full text-base font-semibold text-blue-600 hover:bg-blue-100 text-nowrap"
+                  >
+                    Sign in
+                  </button>
+                  <button
+                    onClick={() => navigate("/login")}
+                    className=" px-6 py-[8px] rounded-full text-base font-semibold outline-none cursor-pointer bg-blue-600 text-white hover:bg-blue-800 text-nowrap"
+                  >
+                    Join now
+                  </button>
                 </div>
               </li>
-            ) : null
-          )}
-          {!authStatus && (
-            <li
-              onClick={() => navigate("/app")}
-              className="flex flex-col justify-center items-center gap-[4px] border-x border-x-gray-500 outline-none  px-4 ml-4 mr-2 text-gray-500 font-semibold text-sm"
-            >
-              <div className="w-4 h-4">
-                <img className="w-full" src={app} alt="" />
-              </div>
-              <p className="text-nowrap">Get the app</p>
-            </li>
-          )}
+            )}
 
-          {!authStatus && (
-            <li>
-              <div className="px-2 flex gap-2">
-                <button
-                  onClick={() => navigate("/signup")}
-                  className="border border-blue-600 outline-none px-6 cursor-pointer py-[8px] rounded-full text-base font-semibold text-blue-600 hover:bg-blue-100 text-nowrap"
-                >
-                  Sign in
+            {authStatus && (
+              <li className="w-[80px]">
+                <div className="px-2">
+                  <ProfileDropdown />
+                </div>
+              </li>
+            )}
+            {authStatus && (
+              <li className="w-[80px]">
+                <div className="px-2">
+                  <Business />
+                </div>
+              </li>
+            )}
+          </ul>
+        </div>
+        {scrollDirection && (
+          <div className=" w-full m-auto bg-white border-t border-gray-100 py-1 ">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-9 h-9 rounded-full bg-green-600"></div>
+                <div className="leading-tight">
+                  <p className="font-semibold text-sm">Devendra Singh</p>
+                  <p className="text-[12px] text-gray-700">Web Developer</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button className="border border-gray-600 rounded-full px-4 py-1 font-semibold">
+                  Resources
                 </button>
-                <button
-                  onClick={() => navigate("/login")}
-                  className=" px-6 py-[8px] rounded-full text-base font-semibold outline-none cursor-pointer bg-blue-600 text-white hover:bg-blue-800 text-nowrap"
-                >
-                  Join now
+                <button className="border border-blue-600 text-blue-800 rounded-full px-4 py-1 font-semibold">
+                  Add profile section
+                </button>
+                <button className="border border-blue-600 bg-blue-600 text-white rounded-full px-4 py-1 font-semibold">
+                  Open to
                 </button>
               </div>
-            </li>
-          )}
-
-          {authStatus && (
-            <li className="w-[80px]">
-              <div  className="px-2">
-                <ProfileDropdown />
-              </div>
-            </li>
-          )}
-          {authStatus && (
-            <li className="w-[80px]">
-              <div  className="px-2">
-                <Business />
-              </div>
-            </li>
-          )}
-
-        
-        </ul>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

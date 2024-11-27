@@ -19,13 +19,6 @@ const App = () => {
      document.body.style.overflow = ""
   }
 
-  
-  // useEffect(() => {
-  //   if(addPost === true){
-  //     document.body.style.overflow = "hidden"
-  //   }
-  // }, [])
-
   const handleOut = () => {
     dispatch(closeAll())
   }
@@ -57,7 +50,7 @@ const App = () => {
       {/* {addPost ? <p>hello</p> : <Post />} */}
       {addPost && <Post />}
 
-      <div className="bg-white fixed left-0 right-0 z-20">
+      <div className="">
         <Header />
       </div>
       <div onClick={handleOut}>

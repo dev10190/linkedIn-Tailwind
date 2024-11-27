@@ -7,7 +7,9 @@ const initialState = {
   messageOption1: false,
   messageOption2: false,
   messageOption3: false,
+  messaging: false,
 };
+
 
 const stateSlice = createSlice({
   name: "stateManage",
@@ -49,11 +51,16 @@ const stateSlice = createSlice({
         state.messageOption3 = !state.messageOption3;
     },
 
+    message : (state) => {
+        state.messaging = !state.messaging;
+    },
+
     closeAll: (state) => {
       (state.profileBtn = false), (state.businessBtn = false);
       state.messageOption1 = false;
       state.messageOption2 = false;
       state.messageOption3 = false;
+      state.messaging = false
     },
   },
 });
@@ -68,6 +75,7 @@ export const {
   messageBtn1,
   messageBtn2,
   messageBtn3,
+  message,
   closeAll,
 } = stateSlice.actions;
 
